@@ -19,22 +19,22 @@ namespace Car
 
         private void Start()
         {
-            var a = new CarStyleData()
-            {
-                ColorId = 3,
-                StyleObjects = new List<CarDetailsEnum>() { CarDetailsEnum.Spoiler, CarDetailsEnum.AirIntake,CarDetailsEnum.Spoiler }
-            };
-            new JsonManager<CarStyleData>().SaveJson("CarStyle",a);
+            // var a = new CarStyleData()
+            // {
+            //     ColorId = 3,
+            //     StyleObjects = new List<CarDetailsEnum>() { CarDetailsEnum.Spoiler, CarDetailsEnum.AirIntake,CarDetailsEnum.Spoiler }
+            // };
+            // new JsonManager<CarStyleData>().SaveJson("CarStyle",a);
         }
 
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                var a = new JsonManager<CarStyleData>().LoadJson("CarStyle");
-                SetStyle(a);
-            }
+            // if (Input.GetKeyDown(KeyCode.E))
+            // {
+            //     var a = new JsonManager<CarStyleData>().LoadJson("CarStyle");
+            //     SetStyle(a);
+            // }
         }
 
         public void SetStyle(CarStyleData styleData)
