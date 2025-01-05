@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Infrastructure.SaveLoad;
+using UnityEngine;
+using Zenject;
 
 namespace Car
 {
@@ -6,8 +8,13 @@ namespace Car
     {
         [SerializeField] private CarMovement _carMovement;
         [SerializeField] private CarStyle _carStyle;
-        
 
+
+        [Inject]
+        public void Construct(CarSaveLoadController carSaveLoadController)
+        {
+        }
+        
         #region Initialization
 
         public void InitToGarage()
