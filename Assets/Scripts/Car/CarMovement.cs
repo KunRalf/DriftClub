@@ -11,7 +11,7 @@ namespace Car
         [SerializeField] private Transform _centerOfMass;
         [SerializeField] private List<Wheel> _forwardWheels;
         [SerializeField] private List<Wheel> _backWheels;
-        [SerializeField] private CarParams _carParams;
+        private CarParamsSO _carParamsSo;
 
         private float _brakeInput;
         private float _verticalInput;
@@ -19,6 +19,11 @@ namespace Car
         private float _speed;
         private float _slipAngle;
 
+        public void Init(CarParamsSO carParamsSo)
+        {
+            _carParamsSo = carParamsSo;
+        }
+        
         private void Update()
         {
             _speed = _rigidbody.velocity.magnitude;
@@ -57,12 +62,12 @@ namespace Car
         {
             foreach (var wheel in _forwardWheels)
             {
-                wheel.WheelCollider.brakeTorque = _brakeInput * _carParams.BrakePower * 0.7f;
+                wheel.WheelCollider.brakeTorque = _brakeInput * _carParamsSo.BrakePower * 0.7f;
             }
 
             foreach (var wheel in _backWheels)
             {
-                wheel.WheelCollider.brakeTorque = _brakeInput * _carParams.BrakePower * 0.3f;
+                wheel.WheelCollider.brakeTorque = _brakeInput * _carParamsSo.BrakePower * 0.3f;
             }
         }
 
@@ -70,7 +75,7 @@ namespace Car
         {
             foreach (var wheel in _backWheels)
             {
-                wheel.WheelCollider.motorTorque = _carParams.MotorPower * _verticalInput;
+                wheel.WheelCollider.motorTorque = _carParamsSo.MotorPower * _verticalInput;
                 wheel.UpdateWheelTransform();
                 wheel.SmokeParticle();
             }
@@ -84,7 +89,7 @@ namespace Car
         
         private void ApplySteering()
         {
-            float steeringAngle = _horizontalInput * _carParams.SteeringCurve.Evaluate(_speed);
+            float steeringAngle = _horizontalInput * _carParamsSo.SteeringCurve.Evaluate(_speed);
             _slipAngle = Vector3.Angle(transform.forward, _rigidbody.velocity - transform.forward);
             if (_slipAngle < 120f)
             {

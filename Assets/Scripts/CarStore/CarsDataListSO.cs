@@ -22,6 +22,7 @@ namespace CarStore
         {
             return _cars.Select(_ => _.Id).ToList();
         }
-        
+
+        public List<CarData> GetAllCars() => _cars;
     }
 }

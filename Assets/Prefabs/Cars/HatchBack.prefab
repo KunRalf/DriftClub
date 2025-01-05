@@ -590,7 +590,6 @@ MonoBehaviour:
     <WheelCollider>k__BackingField: {fileID: 8771051599432813498}
     <WheelSmoke>k__BackingField: {fileID: 5118874354463745695}
     _slipAllowance: 0.35
-  _carParams: {fileID: 11400000, guid: 6419c8a982ccdda4ba7de45fc503d15d, type: 2}
 --- !u!114 &4524115838527088923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,11 +603,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bodyCarMeshRenderer: {fileID: 4943502657104467482}
-  _carStyleSo: {fileID: 0}
   _detailPlaces:
-  - <Type>k__BackingField: 0
-    <Place>k__BackingField: {fileID: 2931564508951380440}
   - <Type>k__BackingField: 1
+    <Place>k__BackingField: {fileID: 2931564508951380440}
+  - <Type>k__BackingField: 2
     <Place>k__BackingField: {fileID: 6974624591711942245}
 --- !u!114 &-6008358557988279344
 MonoBehaviour:

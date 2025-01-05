@@ -12,20 +12,25 @@ namespace Car
         [field: SerializeField] public List<CarColor> Colors { get; private set; }
         [field: SerializeField] public List<CarStyleObject> StyleObjects { get; private set; }
 
-        public (int,Color) GetDefaultColor()
+        public (CarDetailsEnum, GameObject) GetDetail(CarDetailsEnum carDetail)
+        {
+            if (StyleObjects.Count == 0)
+            {
+                throw new ArgumentException("No Details have been assigned.");
+            }
+            var detail = StyleObjects.FirstOrDefault(_ => _.Type == carDetail);
+            return (detail?.Type ?? CarDetailsEnum.None, detail?.Prefab);
+        }
+
+        public (int, Color) GetCarColor(int id)
         {
             if (Colors.Count == 0)
             {
                 throw new ArgumentException("No Colors have been assigned.");
             }
-
-            return (Colors[0].Id, Colors[0].Color);
-        }
-
-        public GameObject GetDetail(CarDetailsEnum carDetail)
-        {
-            var detail = StyleObjects.FirstOrDefault(_ => _.Type == carDetail);
-            return detail?.Prefab;
+            var color = Colors.FirstOrDefault(_ => _.Id == id);
+            if (color == default) return (0,Colors[0].Color);
+            return (color.Id,color.Color);
         }
     }
 }

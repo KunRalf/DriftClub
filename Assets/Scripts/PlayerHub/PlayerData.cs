@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Player
+namespace PlayerHub
 {
     public class PlayerData
     {

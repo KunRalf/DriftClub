@@ -9,5 +9,7 @@ namespace CarStore
     {
         [field:SerializeField] public int Id { get; private set; }
         [field:SerializeField] public CarMainController CarPrefab { get; private set; }
+        [field:SerializeField] public CarStyleSO CarStyle { get; private set; }
+        [field:SerializeField] public CarParamsSO CarParams { get; private set; }
     }
 }

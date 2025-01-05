@@ -16,6 +16,14 @@ MonoBehaviour:
   - <Id>k__BackingField: 0
     <CarPrefab>k__BackingField: {fileID: -6008358557988279344, guid: fa62a7b558dc8364e95f885e72d738d0,
       type: 3}
+    <CarStyle>k__BackingField: {fileID: 11400000, guid: 715976c1e6f2f8745bc82e7149d5960a,
+      type: 2}
+    <CarParams>k__BackingField: {fileID: 11400000, guid: 6419c8a982ccdda4ba7de45fc503d15d,
+      type: 2}
   - <Id>k__BackingField: 1
     <CarPrefab>k__BackingField: {fileID: 6776878470337818100, guid: ae27ef265b9c09f439230b7acf47873f,
       type: 3}
+    <CarStyle>k__BackingField: {fileID: 11400000, guid: b29bde92bac44fe40b83118f829267d8,
+      type: 2}
+    <CarParams>k__BackingField: {fileID: 11400000, guid: 7147682e85e0b5a448cccc551b558392,
+      type: 2}

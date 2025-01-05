@@ -2,6 +2,7 @@
 {
     public enum CarDetailsEnum
     {
+        None,
         Spoiler,
         AirIntake
     }

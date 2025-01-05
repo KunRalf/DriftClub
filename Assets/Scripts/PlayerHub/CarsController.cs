@@ -1,4 +1,4 @@
-﻿namespace Player
+﻿namespace PlayerHub
 {
     public class CarsController
     {

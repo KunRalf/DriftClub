@@ -8,18 +8,20 @@ namespace Car
     {
         [SerializeField] private CarMovement _carMovement;
         [SerializeField] private CarStyle _carStyle;
-
-
-        [Inject]
-        public void Construct(CarSaveLoadController carSaveLoadController)
-        {
-        }
         
+        public int Id { get; private set; }
         #region Initialization
 
+        public void Init(CarStyleSO carStyleSo, CarParamsSO carParamsSo, int id)
+        {
+            Id = id;
+            _carStyle.Init(carStyleSo);
+            _carMovement.Init(carParamsSo);
+        }
+        
         public void InitToGarage()
         {
-            
+            _carMovement.enabled = false;
         }
 
         public void InitToGame()
@@ -36,11 +38,11 @@ namespace Car
             
         }
 
-        private void SetCarStyleParams()
+        public void SetCarStyleParams(CarStyleData data)
         {
-            
-        }
-
+            _carStyle.SetStyle(data);
+        }  
+        
         #endregion
         
      

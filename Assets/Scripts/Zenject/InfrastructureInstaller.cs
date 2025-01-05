@@ -7,6 +7,8 @@ namespace Zenject
         public override void InstallBindings()
         {
             Container.Bind<ISaveLoad>().To<JsonManager>().AsSingle();
+
+            Container.Bind<CarSaveLoadController>().AsSingle();
         }
     }
 }
