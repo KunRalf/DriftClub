@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f13e7538fcf4e30a99e43ffe4ada3fe, type: 3}
+  m_Name: HatchbackStyle
+  m_EditorClassIdentifier: 
+  <Colors>k__BackingField:
+  - <Id>k__BackingField: 0
+    <Color>k__BackingField: {r: 0.3764706, g: 0.25882354, b: 0.16470589, a: 1}
+  - <Id>k__BackingField: 1
+    <Color>k__BackingField: {r: 0.4528302, g: 0.13456745, b: 0.14630696, a: 1}
+  - <Id>k__BackingField: 2
+    <Color>k__BackingField: {r: 0.20322849, g: 0.5943396, b: 0.19344072, a: 1}
+  - <Id>k__BackingField: 3
+    <Color>k__BackingField: {r: 0.18640977, g: 0.40802535, b: 0.5566038, a: 1}
+  <StyleObjects>k__BackingField:
+  - <Type>k__BackingField: 1
+    <Prefab>k__BackingField: {fileID: 3702921272691142838, guid: ab0fa0a55323a9d40841a5f8bc832910,
+      type: 3}
+  - <Type>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 2650430254563195988, guid: a5525c4a6398c45448c862aa68e3848b,
+      type: 3}
