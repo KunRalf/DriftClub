@@ -39,3 +39,4 @@ MonoBehaviour:
     m_RotationOrder: 4
   <BrakePower>k__BackingField: 50000
   <HandBrakePower>k__BackingField: 0
+  <MaxSpeed>k__BackingField: 10

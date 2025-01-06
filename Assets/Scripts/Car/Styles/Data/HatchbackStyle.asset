@@ -22,9 +22,9 @@ MonoBehaviour:
   - <Id>k__BackingField: 3
     <Color>k__BackingField: {r: 0.18640977, g: 0.40802535, b: 0.5566038, a: 1}
   <StyleObjects>k__BackingField:
-  - <Type>k__BackingField: 1
+  - <Type>k__BackingField: 2
     <Prefab>k__BackingField: {fileID: 3702921272691142838, guid: ab0fa0a55323a9d40841a5f8bc832910,
       type: 3}
-  - <Type>k__BackingField: 2
+  - <Type>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: 2650430254563195988, guid: a5525c4a6398c45448c862aa68e3848b,
       type: 3}

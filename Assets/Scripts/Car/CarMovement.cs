@@ -7,11 +7,15 @@ namespace Car
 {
     public class CarMovement : MonoBehaviour
     {
+        public event Action OnDriftStarted;
+        public event Action<float> OnDriftEnded;
+        public event Action<float> OnDriftProgress;
+        
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Transform _centerOfMass;
         [SerializeField] private List<Wheel> _forwardWheels;
         [SerializeField] private List<Wheel> _backWheels;
-        private CarParamsSO _carParamsSo;
+        [SerializeField] private CarParamsSO _carParamsSo;
 
         private float _brakeInput;
         private float _verticalInput;
@@ -19,6 +23,14 @@ namespace Car
         private float _speed;
         private float _slipAngle;
 
+        private bool _isDrifting;
+        private float _driftStartTime;
+        private float _driftPoints;
+        private float _minDriftAngle = 30f; 
+        private float _maxDriftAngle = 90f; 
+        private float _minSpeedForDrift = 5f;
+        
+        
         public void Init(CarParamsSO carParamsSo)
         {
             _carParamsSo = carParamsSo;
@@ -28,13 +40,16 @@ namespace Car
         {
             _speed = _rigidbody.velocity.magnitude;
             CheckInput();
+            CheckDrift();
+            CalculateSlipAngle();
         }
-
+        
         private void FixedUpdate()
         {
             Motor();
             ApplySteering();
             Brake();
+            LimitSpeed();
         }
 
         private void CheckInput()
@@ -90,7 +105,6 @@ namespace Car
         private void ApplySteering()
         {
             float steeringAngle = _horizontalInput * _carParamsSo.SteeringCurve.Evaluate(_speed);
-            _slipAngle = Vector3.Angle(transform.forward, _rigidbody.velocity - transform.forward);
             if (_slipAngle < 120f)
             {
                 steeringAngle += Vector3.SignedAngle(transform.forward, _rigidbody.velocity + transform.forward, Vector3.up);
@@ -99,6 +113,45 @@ namespace Car
             foreach (var wheel in _forwardWheels)
             {
                 wheel.WheelCollider.steerAngle = steeringAngle;
+            }
+        }
+        
+        private void CalculateSlipAngle()
+        {
+            _slipAngle = Vector3.Angle(transform.forward, _rigidbody.velocity - transform.forward);
+        }
+        
+        private void CheckDrift()
+        {
+            if (_speed > _minSpeedForDrift && _slipAngle > _minDriftAngle && _slipAngle < _maxDriftAngle)
+            {
+                if (!_isDrifting)
+                {
+                    _isDrifting = true;
+                    _driftStartTime = Time.time;
+                    OnDriftStarted?.Invoke();
+                }
+                
+                float driftDuration = Time.time - _driftStartTime;
+                _driftPoints += driftDuration * _slipAngle * 0.01f;
+                OnDriftProgress?.Invoke(_driftPoints);
+            }
+            else
+            {
+                if (_isDrifting)
+                {
+                    _isDrifting = false;
+                    OnDriftEnded?.Invoke(_driftPoints);
+                    _driftPoints = 0;
+                }
+            }
+        }
+        
+        private void LimitSpeed()
+        {
+            if (_rigidbody.velocity.magnitude > _carParamsSo.MaxSpeed)
+            {
+                _rigidbody.velocity = _rigidbody.velocity.normalized * _carParamsSo.MaxSpeed;
             }
         }
     }

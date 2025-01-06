@@ -9,6 +9,7 @@ namespace Car
         [field:SerializeField] public AnimationCurve SteeringCurve { get; private set; }
         [field:SerializeField] public float BrakePower { get; private set; }
         [field:SerializeField] public float HandBrakePower { get; private set; }
+        [field:SerializeField] public float MaxSpeed { get; private set; }
        
     }
 }

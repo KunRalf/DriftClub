@@ -1,6 +1,6 @@
-﻿using Infrastructure.SaveLoad;
+﻿using System;
+using Car.UI;
 using UnityEngine;
-using Zenject;
 
 namespace Car
 {
@@ -8,9 +8,18 @@ namespace Car
     {
         [SerializeField] private CarMovement _carMovement;
         [SerializeField] private CarStyle _carStyle;
+        [SerializeField] private CarHUD _carHud;
+
+        private CarHUD _curCarHud;
         
         public int Id { get; private set; }
+        
         #region Initialization
+
+        private void Start()
+        {
+            InitToGame();
+        }
 
         public void Init(CarStyleSO carStyleSo, CarParamsSO carParamsSo, int id)
         {
@@ -26,25 +35,25 @@ namespace Car
 
         public void InitToGame()
         {
-            
+            InitHud();   
+        }
+
+        private void InitHud()
+        {
+            _carHud = Instantiate(_carHud);
+            _carHud.Init();
+            _carMovement.OnDriftStarted += _carHud.ShowDriftPoints;
+            _carMovement.OnDriftEnded += _carHud.HideDriftPoints;
+            _carMovement.OnDriftProgress += _carHud.ProgressPoints;
         }
 
         #endregion
 
-        #region Save Load Car Syle
-
-        private void GetCarStyleParams()
-        {
-            
-        }
-
+    
         public void SetCarStyleParams(CarStyleData data)
         {
             _carStyle.SetStyle(data);
         }  
         
-        #endregion
-        
-     
     }
 }
