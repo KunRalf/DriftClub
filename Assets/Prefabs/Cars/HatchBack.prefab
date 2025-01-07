@@ -624,6 +624,7 @@ MonoBehaviour:
   _carMovement: {fileID: 7134445374408849105}
   _carStyle: {fileID: 4524115838527088923}
   _carHud: {fileID: 4059611078347630514, guid: 1f597c51304b1084bb9765bf4d868479, type: 3}
+  CameraFollowTransform: {fileID: 7467084154951884145}
 --- !u!1 &6794030040378158459
 GameObject:
   m_ObjectHideFlags: 0

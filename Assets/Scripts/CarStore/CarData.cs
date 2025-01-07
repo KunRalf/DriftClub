@@ -11,5 +11,6 @@ namespace CarStore
         [field:SerializeField] public CarMainController CarPrefab { get; private set; }
         [field:SerializeField] public CarStyleSO CarStyle { get; private set; }
         [field:SerializeField] public CarParamsSO CarParams { get; private set; }
+        [field:SerializeField] public float Cost { get; private set; }
     }
 }

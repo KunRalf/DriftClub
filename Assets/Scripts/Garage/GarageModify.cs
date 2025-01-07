@@ -3,6 +3,7 @@ using System.Linq;
 using Car;
 using Garage.UIPrefabs;
 using Infrastructure.SaveLoad;
+using Services;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,14 +26,18 @@ namespace Garage
         private CarMainController _currentCarController;
         private CarSaveLoadController _carSaveLoadController;
         private PlayerCarData _playerCarData;
+        private PlayerDataController _playerDataController;
+        private MessagesService _messagesService;
 
-        public void Init(CarStyleSO carStyle, CarMainController currentCarController, CarSaveLoadController carStyleData)
+        public void Init(CarStyleSO carStyle, CarMainController currentCarController, CarSaveLoadController carStyleData, PlayerDataController playerDataController, MessagesService messagesService)
         {
-            InitColors(carStyle.Colors);
-            InitDetails(carStyle.StyleObjects);
             _currentCarController = currentCarController;
             _carSaveLoadController = carStyleData;
+            _messagesService = messagesService;
+            _playerDataController = playerDataController;
             _playerCarData = carStyleData.PlayerCarsData.First(_ => _.CarId == currentCarController.Id);
+            InitColors(carStyle.Colors);
+            InitDetails(carStyle.StyleObjects);
             _panel.SetActive(true);
         }
 
@@ -62,7 +67,8 @@ namespace Garage
             foreach (var detail in details)
             {
                 var prefab = Instantiate(_detailSelectPrefab, _spawnDetailsPlace);
-                prefab.Init(detail, SetDetail);
+              
+                prefab.Init(detail,_playerCarData.Data.PurchasedDetails.Contains(detail.Type), BuyDetail);
                 _detailsPool.Add(prefab);
             }
         }
@@ -96,6 +102,26 @@ namespace Garage
             }
             _currentCarController.SetCarStyleParams( _playerCarData.Data);
             _carSaveLoadController.Save(_playerCarData);
+        }
+
+        private void BuyDetail(CarStyleObject styleObject)
+        {
+            if (_playerCarData.Data.PurchasedDetails.Contains(styleObject.Type))
+            {
+                SetDetail(styleObject.Type);
+                return;
+            }
+            if (_playerDataController.Cash < styleObject.Cost)
+            {
+                _messagesService.InitMessage(string.Empty, "No money to buy");
+            }
+            else
+            {
+                _carSaveLoadController.AddPurchasedDetails(_currentCarController.Id, styleObject.Type);
+                SetDetail(styleObject.Type);
+                _playerDataController.UpdateCash(_playerDataController.Cash - styleObject.Cost);
+                _detailsPool.First(_ => _.Type == styleObject.Type).UpdateState(_playerCarData.Data.PurchasedDetails.Contains(styleObject.Type));
+            }
         }
     }
 }

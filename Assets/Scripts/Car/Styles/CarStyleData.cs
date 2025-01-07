@@ -5,7 +5,8 @@ namespace Car
 {
     public class CarStyleData
     {
-        public List<CarDetailsEnum> StyleObjects { get; set; }
+        public List<CarDetailsEnum> StyleObjects { get; set; } = new List<CarDetailsEnum>();
+        public List<CarDetailsEnum>  PurchasedDetails { get; set; } = new List<CarDetailsEnum>();
         public int ColorId { get; set; }
     }
 }

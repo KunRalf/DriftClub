@@ -7,6 +7,7 @@ namespace Car
     public class CarStyleObject
     {
         [field:SerializeField] public CarDetailsEnum Type { get; private set; }
-        [field:SerializeField] public GameObject Prefab { get; private set; }
+        [field:SerializeField] public CarStyleObjectPrefab Prefab { get; private set; }
+        [field:SerializeField] public float Cost { get; private set; }
     }
 }

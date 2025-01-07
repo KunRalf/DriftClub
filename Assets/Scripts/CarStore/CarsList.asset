@@ -20,6 +20,7 @@ MonoBehaviour:
       type: 2}
     <CarParams>k__BackingField: {fileID: 11400000, guid: 6419c8a982ccdda4ba7de45fc503d15d,
       type: 2}
+    <Cost>k__BackingField: 0
   - <Id>k__BackingField: 1
     <CarPrefab>k__BackingField: {fileID: 6776878470337818100, guid: ae27ef265b9c09f439230b7acf47873f,
       type: 3}
@@ -27,3 +28,4 @@ MonoBehaviour:
       type: 2}
     <CarParams>k__BackingField: {fileID: 11400000, guid: 7147682e85e0b5a448cccc551b558392,
       type: 2}
+    <Cost>k__BackingField: 10

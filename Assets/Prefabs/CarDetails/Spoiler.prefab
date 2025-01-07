@@ -114,6 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1782167965718110154}
+  - component: {fileID: 5085467349125818003}
   m_Layer: 0
   m_Name: Spoiler
   m_TagString: Untagged
@@ -139,6 +140,19 @@ Transform:
   - {fileID: 9101495311772375898}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5085467349125818003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650430254563195988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ed539d4f414cfeb5286dc5291bed50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Type>k__BackingField: 1
 --- !u!1 &3546716480403480488
 GameObject:
   m_ObjectHideFlags: 0

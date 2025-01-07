@@ -12,7 +12,7 @@ namespace Car
         [field: SerializeField] public List<CarColor> Colors { get; private set; }
         [field: SerializeField] public List<CarStyleObject> StyleObjects { get; private set; }
 
-        public (CarDetailsEnum, GameObject) GetDetail(CarDetailsEnum carDetail)
+        public (CarDetailsEnum, CarStyleObjectPrefab) GetDetail(CarDetailsEnum carDetail)
         {
             if (StyleObjects.Count == 0)
             {

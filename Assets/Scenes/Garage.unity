@@ -2574,6 +2574,7 @@ MonoBehaviour:
   _garageCarSwitcher: {fileID: 1649990649}
   _garageModify: {fileID: 1649990652}
   _modifyButton: {fileID: 428245946}
+  _modifyButtonText: {fileID: 1025837299}
 --- !u!4 &1649990651
 Transform:
   m_ObjectHideFlags: 0

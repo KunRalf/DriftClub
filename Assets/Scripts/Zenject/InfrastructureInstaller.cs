@@ -8,6 +8,7 @@ namespace Zenject
         {
             Container.Bind<ISaveLoad>().To<JsonManager>().AsSingle();
 
+            Container.Bind<PlayerDataController>().AsSingle().NonLazy();
             Container.Bind<CarSaveLoadController>().AsSingle();
         }
     }

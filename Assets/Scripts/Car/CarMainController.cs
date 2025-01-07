@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Linq;
 using Car.UI;
+using Infrastructure.SaveLoad;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Zenject;
 
 namespace Car
 {
@@ -9,7 +13,8 @@ namespace Car
         [SerializeField] private CarMovement _carMovement;
         [SerializeField] private CarStyle _carStyle;
         [SerializeField] private CarHUD _carHud;
-
+        [field: SerializeField] public Transform CameraFollowTransform;
+        
         private CarHUD _curCarHud;
         
         public int Id { get; private set; }
@@ -18,7 +23,7 @@ namespace Car
 
         private void Start()
         {
-            InitToGame();
+             InitToGame();
         }
 
         public void Init(CarStyleSO carStyleSo, CarParamsSO carParamsSo, int id)

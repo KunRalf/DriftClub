@@ -501,6 +501,7 @@ MonoBehaviour:
     <WheelCollider>k__BackingField: {fileID: 6882168500587053970}
     <WheelSmoke>k__BackingField: {fileID: 660861001899965181}
     _slipAllowance: 0.35
+  _carParamsSo: {fileID: 0}
 --- !u!114 &7456676630427543791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +530,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _carMovement: {fileID: 9068102865907791746}
   _carStyle: {fileID: 7456676630427543791}
+  _carHud: {fileID: 4059611078347630514, guid: 1f597c51304b1084bb9765bf4d868479, type: 3}
+  CameraFollowTransform: {fileID: 5576396788933122039}
 --- !u!1 &2347060866040444330
 GameObject:
   m_ObjectHideFlags: 0

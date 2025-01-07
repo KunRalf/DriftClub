@@ -13,6 +13,8 @@ namespace Garage
 {
     public class GarageCarSwitcher : MonoBehaviour
     {
+        public event Action<int> OnCarSwitch; 
+        
         [SerializeField] private GameObject _panel;
         [SerializeField] private Button _prevCar;
         [SerializeField] private Button _nextCar;
@@ -71,7 +73,6 @@ namespace Garage
                     CarId = CurrentCar.Id,
                     Data = new CarStyleData()
                 };
-                curData.Data.StyleObjects = new List<CarDetailsEnum>();
                 curData.Data.ColorId = CurrentCar.CarStyle.GetCarColor(0).Item1;
                 _carSaveLoadController.Save(curData);
             }
@@ -85,6 +86,7 @@ namespace Garage
                 Destroy(CurrentCarController.gameObject);
             }
             var car = _cars[index];
+            OnCarSwitch?.Invoke(car.Id);
             CurrentCarController = Instantiate(car.CarPrefab, _spawnPoint.position, _spawnPoint.rotation);
             CurrentCarController.Init(car.CarStyle, car.CarParams, car.Id);
             CurrentCarController.InitToGarage();

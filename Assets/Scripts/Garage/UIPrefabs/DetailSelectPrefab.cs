@@ -10,14 +10,23 @@ namespace Garage.UIPrefabs
     public class DetailSelectPrefab : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _detailName;
+        [SerializeField] private TextMeshProUGUI _detailCost;
         [SerializeField] private Button _button;
-        private CarDetailsEnum _type;
-        
-        public void Init(CarStyleObject carStyleObject, Action<CarDetailsEnum> callback)
+        public CarDetailsEnum Type => _styleObj.Type;
+    
+        private CarStyleObject _styleObj;
+
+        public void Init(CarStyleObject carStyleObject, bool isBuy, Action<CarStyleObject> callback)
         {
-            _type = carStyleObject.Type;
-            _detailName.text = _type.ToString();
-            _button.AddListener(() => callback(_type));
+            _styleObj = carStyleObject;
+            _detailCost.text =isBuy ? $"was buy" : $"Cost: {carStyleObject.Cost}";
+            _detailName.text = Type.ToString();
+            _button.AddListener(() => callback(_styleObj));
+        }
+
+        public void UpdateState(bool isBuy)
+        {
+            _detailCost.text =isBuy ? $"was buy" : $"Cost: {_styleObj.Cost}";
         }
     }
 }

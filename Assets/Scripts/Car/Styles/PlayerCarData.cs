@@ -6,5 +6,6 @@ namespace Car
     {
         public int CarId { get; set; }
         public CarStyleData Data { get; set; }
+       
     }
 }

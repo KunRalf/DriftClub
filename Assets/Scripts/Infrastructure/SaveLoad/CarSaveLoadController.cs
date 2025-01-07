@@ -32,5 +32,17 @@ namespace Infrastructure.SaveLoad
             }
             _saveLoad.Save(SAVE_LOAD_PATH, PlayerCarsData);
         }
+
+        public void AddPurchasedDetails(int carId, CarDetailsEnum detail)
+        {
+            var carData = PlayerCarsData.FirstOrDefault(_ => _.CarId == carId);
+            if (carData == default) return;
+            if (!carData.Data.PurchasedDetails.Contains(detail))
+            {
+                carData.Data.PurchasedDetails.Add(detail);
+            }
+
+            Save(carData);
+        } 
     }
 }
