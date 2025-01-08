@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 7756490242360004990}
   - {fileID: 7624265298179637945}
+  - {fileID: 2527695884501750541}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5317570192029404375
@@ -80,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainData: {fileID: 7381287265095258417}
   _messagesService: {fileID: 3435922169458246367}
+  _networkService: {fileID: 467678159414006199}
 --- !u!114 &8786443130894134332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +92,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a90fbc9d16a4a1aa748d9a769008527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1111615164208197870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2527695884501750541}
+  - component: {fileID: 467678159414006199}
+  m_Layer: 0
+  m_Name: Network
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2527695884501750541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111615164208197870}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7521538551934739813}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &467678159414006199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111615164208197870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614ce9ebf5264013b1bff9f06cc423c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &9082023314495584366

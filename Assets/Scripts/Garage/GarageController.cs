@@ -5,6 +5,7 @@ using Car;
 using CarStore;
 using Helpers;
 using Infrastructure.SaveLoad;
+using Network;
 using PlayerHub;
 using Services;
 using TMPro;
@@ -28,20 +29,24 @@ namespace Garage
 
         [Header("Buttons")]
         [SerializeField] private Button _goToGameButton;
+        [SerializeField] private Button _joinButton;
         [SerializeField] private Button _modifyButton;
         [SerializeField] private TextMeshProUGUI _modifyButtonText;
 
         private CarSaveLoadController _carSaveLoadController;
         private PlayerDataController _playerDataController;
         private MessagesService _messagesService;
+        private NetworkService _networkService;
 
         [Inject]
-        public void Construct(MainData mainData, CarSaveLoadController carSaveLoadController, PlayerDataController playerDataController, MessagesService messagesService)
+        public void Construct(MainData mainData, CarSaveLoadController carSaveLoadController,
+            PlayerDataController playerDataController, MessagesService messagesService, NetworkService networkService)
         {
             _carsDataListSO = mainData.CarsDataList;
             _carSaveLoadController = carSaveLoadController;
             _playerDataController = playerDataController;
             _messagesService = messagesService;
+            _networkService = networkService;
             _garageCarSwitcher.OnCarSwitch += CarSwitch;
             _cashUI.UpdateCash(_playerDataController.Cash);
             _playerDataController.OnCashChanged += _cashUI.UpdateCash;
@@ -68,12 +73,18 @@ namespace Garage
             if (isHas)
             {
                 _goToGameButton.gameObject.SetActive(true);
-                _goToGameButton.AddListener(GoToGame);
+                _goToGameButton.AddListener(GoToGame); 
+                
+                _joinButton.gameObject.SetActive(true);
+                _joinButton.AddListener(Join);
             }
             else
             {
                 _goToGameButton.gameObject.SetActive(false);
-                _goToGameButton.RemoveAllListeners();
+                _goToGameButton.RemoveAllListeners(); 
+                
+                _joinButton.gameObject.SetActive(false);
+                _joinButton.RemoveAllListeners();
             }
         }
 
@@ -94,7 +105,14 @@ namespace Garage
 
         private void GoToGame()
         {
-            SceneManager.LoadSceneAsync("GameScene");
+            // SceneManager.LoadSceneAsync("GameScene");
+            _networkService.CreateRoom();
+        }
+        
+        private void Join()
+        {
+            // SceneManager.LoadSceneAsync("GameScene");
+            _networkService.JoinRandomRoom();
         }
         
         private void OpenCarBuyWindow(int carId)
