@@ -12,7 +12,6 @@ namespace Car
         public event Action<float> OnDriftProgress;
         
         [SerializeField] private Rigidbody _rigidbody;
-        [SerializeField] private Transform _centerOfMass;
         [SerializeField] private List<Wheel> _forwardWheels;
         [SerializeField] private List<Wheel> _backWheels;
         [SerializeField] private CarParamsSO _carParamsSo;
@@ -38,7 +37,6 @@ namespace Car
         public void Init(CarParamsSO carParamsSo)
         {
             _carParamsSo = carParamsSo;
-            _rigidbody.centerOfMass = _centerOfMass.position;
         }
         
         private void Update()
