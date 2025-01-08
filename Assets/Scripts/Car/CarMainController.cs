@@ -20,11 +20,7 @@ namespace Car
         public int Id { get; private set; }
         
         #region Initialization
-
-        private void Start()
-        {
-             InitToGame();
-        }
+        
 
         public void Init(CarStyleSO carStyleSo, CarParamsSO carParamsSo, int id)
         {

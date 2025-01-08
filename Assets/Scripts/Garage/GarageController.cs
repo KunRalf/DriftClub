@@ -5,9 +5,11 @@ using Car;
 using CarStore;
 using Helpers;
 using Infrastructure.SaveLoad;
+using PlayerHub;
 using Services;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
@@ -22,8 +24,10 @@ namespace Garage
         [Header("Controllers")]
         [SerializeField] private GarageCarSwitcher _garageCarSwitcher;
         [SerializeField] private GarageModify _garageModify;
-        
+        [SerializeField] private CashUI _cashUI;
+
         [Header("Buttons")]
+        [SerializeField] private Button _goToGameButton;
         [SerializeField] private Button _modifyButton;
         [SerializeField] private TextMeshProUGUI _modifyButtonText;
 
@@ -39,8 +43,9 @@ namespace Garage
             _playerDataController = playerDataController;
             _messagesService = messagesService;
             _garageCarSwitcher.OnCarSwitch += CarSwitch;
+            _cashUI.UpdateCash(_playerDataController.Cash);
+            _playerDataController.OnCashChanged += _cashUI.UpdateCash;
             _garageCarSwitcher.Init(_carsDataListSO.GetAllCars(),_carPoint, carSaveLoadController);
-           
         }
         
         private void OpenModify()
@@ -52,7 +57,29 @@ namespace Garage
         private void CarSwitch(int carId)
         {
             ResetModifyButton();
-            if (_playerDataController.OpenedCars.Contains(carId))
+            bool isHas = _playerDataController.OpenedCars.Contains(carId);
+            if(isHas)
+                _playerDataController.SetCurrentCar(carId);
+            CheckModify(isHas, carId);
+            CheckReadyToGame(isHas);
+        }
+
+        private void CheckReadyToGame(bool isHas)
+        {
+            if (isHas)
+            {
+                _goToGameButton.gameObject.SetActive(true);
+                _goToGameButton.AddListener(GoToGame);
+            }
+            else
+            {
+                _goToGameButton.gameObject.SetActive(false);
+            }
+        }
+
+        private void CheckModify(bool isHas, int carId)
+        {
+            if (isHas)
             {
                 _modifyButtonText.text = $"Modify";
                 _modifyButton.AddListener(OpenModify);
@@ -64,6 +91,11 @@ namespace Garage
             }
         }
 
+        private void GoToGame()
+        {
+            SceneManager.LoadSceneAsync("GameScene");
+        }
+        
         private void OpenCarBuyWindow(int carId)
         {
             _messagesService.InitMessage("Buy car", $"Cost: {_carsDataListSO.GetCarById(carId).Cost}",() => BuyCar(carId));
@@ -82,9 +114,25 @@ namespace Garage
                 _playerDataController.AddCar(carId);
                 CarSwitch(carId);
                 _messagesService.InitMessage(string.Empty, "U but a car");
+                CheckOnEmptyStyles();
             }
         }
         
+        private void CheckOnEmptyStyles()
+        {
+            PlayerCarData curData =
+                _carSaveLoadController.PlayerCarsData.FirstOrDefault(_ => _.CarId == _garageCarSwitcher.CurrentCar.Id);
+            if (curData == default)
+            {
+                curData = new PlayerCarData()
+                {
+                    CarId = _garageCarSwitcher.CurrentCar.Id,
+                    Data = new CarStyleData()
+                };
+                curData.Data.ColorId = _garageCarSwitcher.CurrentCar.CarStyle.GetCarColor(0).Item1;
+                _carSaveLoadController.Save(curData);
+            }
+        }
         
         private void ResetModifyButton()
         {
@@ -94,6 +142,7 @@ namespace Garage
         private void OnDestroy()
         {
             _garageCarSwitcher.OnCarSwitch -= CarSwitch;
+            _playerDataController.OnCashChanged -= _cashUI.UpdateCash;
         }
     }
 }

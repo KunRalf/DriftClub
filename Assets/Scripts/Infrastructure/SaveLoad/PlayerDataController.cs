@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Car;
 using PlayerHub;
@@ -8,6 +9,8 @@ namespace Infrastructure.SaveLoad
 {
     public class PlayerDataController
     {
+        public event Action<float> OnCashChanged; 
+        
         private readonly ISaveLoad _saveLoad;
         private const string SAVE_LOAD_PATH = "PlayerData";
 
@@ -15,8 +18,8 @@ namespace Infrastructure.SaveLoad
 
         public string Name => _playerData.PlayerName;
         public float Cash => _playerData.PlayerCash;
-        public int CurrentCar => _playerData.PlayerCurrentCarId;
-        public List<int> OpenedCars => _playerData.OpenedCars.ToList(); 
+        public int? CurrentCar => _playerData.PlayerCurrentCarId;
+        public List<int> OpenedCars => _playerData.OpenedCars.ToList();
         
         [Inject]
         public PlayerDataController(ISaveLoad saveLoad)
@@ -49,6 +52,7 @@ namespace Infrastructure.SaveLoad
             if (cash < 0)
                 cash = 0;
             _playerData.PlayerCash = cash;
+            OnCashChanged?.Invoke(cash);
             Save();
         }
         

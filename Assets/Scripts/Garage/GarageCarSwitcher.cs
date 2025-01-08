@@ -61,23 +61,6 @@ namespace Garage
             }
             ShowCar(_currentCarIndex);
         }
-
-        private void CheckOnEmptyStyles()
-        {
-            PlayerCarData curData =
-                _carSaveLoadController.PlayerCarsData.FirstOrDefault(_ => _.CarId == CurrentCar.Id);
-            if (curData == default)
-            {
-                curData = new PlayerCarData()
-                {
-                    CarId = CurrentCar.Id,
-                    Data = new CarStyleData()
-                };
-                curData.Data.ColorId = CurrentCar.CarStyle.GetCarColor(0).Item1;
-                _carSaveLoadController.Save(curData);
-            }
-        }
-        
         
         private void ShowCar(int index)
         {
@@ -96,7 +79,7 @@ namespace Garage
                 CurrentCarController.SetCarStyleParams(carData.Data);
             }
             CurrentCar = car;
-            CheckOnEmptyStyles();
+            // CheckOnEmptyStyles();
         }
 
         private void Default()
