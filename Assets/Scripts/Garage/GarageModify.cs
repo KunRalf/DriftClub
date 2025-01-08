@@ -14,9 +14,11 @@ namespace Garage
         [SerializeField] private GameObject _panel;
         [Header("Colors")]
         [SerializeField] private ColorSelectPrefab _colorSelectPrefab;
-
         [SerializeField] private RectTransform _spawnColorsPlace;
-        private List<ColorSelectPrefab> _colorsPool = new List<ColorSelectPrefab>();
+        private List<ColorSelectPrefab> _colorsPool = new List<ColorSelectPrefab>();     
+        [Header("SmokeOfWheel")]
+        [SerializeField] private RectTransform _spawnSmokeOfWheelColorsPlace;
+        private List<ColorSelectPrefab> _smokeOfWheelColorsPool = new List<ColorSelectPrefab>();
         
         [Header("Details")]
         [SerializeField] private DetailSelectPrefab _detailSelectPrefab;
@@ -37,6 +39,7 @@ namespace Garage
             _playerDataController = playerDataController;
             _playerCarData = carStyleData.PlayerCarsData.First(_ => _.CarId == currentCarController.Id);
             InitColors(carStyle.Colors);
+            InitSmokeOfWheelColors(carStyle.SmokeColors);
             InitDetails(carStyle.StyleObjects);
             _panel.SetActive(true);
         }
@@ -50,6 +53,17 @@ namespace Garage
                 prefab.Init(color, SetColor);
                 _colorsPool.Add(prefab);
             }
+        }       
+        
+        private void InitSmokeOfWheelColors(List<CarColor> colors)
+        {
+            DefaultSmokeOfWheelColors();
+            foreach (var color in colors)
+            {
+                var prefab = Instantiate(_colorSelectPrefab, _spawnSmokeOfWheelColorsPlace);
+                prefab.Init(color, SetSmokeOfWheelColor);
+                _smokeOfWheelColorsPool.Add(prefab);
+            }
         }
 
         private void DefaultColors()
@@ -59,6 +73,15 @@ namespace Garage
                 Destroy(color.gameObject);
             }
             _colorsPool.Clear();
+        }  
+        
+        private void DefaultSmokeOfWheelColors()
+        {
+            foreach (var color in _smokeOfWheelColorsPool)
+            {
+                Destroy(color.gameObject);
+            }
+            _smokeOfWheelColorsPool.Clear();
         }
 
         private void InitDetails(List<CarStyleObject> details)
@@ -87,6 +110,13 @@ namespace Garage
         {
             _playerCarData.Data.ColorId = id;
             _currentCarController.SetCarStyleParams( _playerCarData.Data);
+            _carSaveLoadController.Save( _playerCarData);
+        }   
+        
+        private void SetSmokeOfWheelColor(int id)
+        {
+            _playerCarData.Data.SmokeOfWheelColoId = id;
+            _currentCarController.SetCarStyleParams(_playerCarData.Data);
             _carSaveLoadController.Save( _playerCarData);
         }
 
