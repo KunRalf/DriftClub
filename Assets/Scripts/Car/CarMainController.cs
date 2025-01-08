@@ -10,6 +10,8 @@ namespace Car
 {
     public class CarMainController : MonoBehaviour
     {
+        public event Action<int> OnUpdatePoints; 
+        
         [SerializeField] private CarMovement _carMovement;
         [SerializeField] private CarStyle _carStyle;
         [SerializeField] private CarHUD _carHud;
@@ -45,6 +47,7 @@ namespace Car
             _carHud.Init();
             _carMovement.OnDriftStarted += _carHud.ShowDriftPoints;
             _carMovement.OnDriftEnded += _carHud.HideDriftPoints;
+            _carMovement.OnDriftEnded += (float cash) => OnUpdatePoints?.Invoke((int)cash);
             _carMovement.OnDriftProgress += _carHud.ProgressPoints;
         }
 

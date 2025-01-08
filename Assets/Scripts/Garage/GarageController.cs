@@ -56,7 +56,6 @@ namespace Garage
 
         private void CarSwitch(int carId)
         {
-            ResetModifyButton();
             bool isHas = _playerDataController.OpenedCars.Contains(carId);
             if(isHas)
                 _playerDataController.SetCurrentCar(carId);
@@ -74,11 +73,13 @@ namespace Garage
             else
             {
                 _goToGameButton.gameObject.SetActive(false);
+                _goToGameButton.RemoveAllListeners();
             }
         }
 
         private void CheckModify(bool isHas, int carId)
         {
+            ResetModifyButton();
             if (isHas)
             {
                 _modifyButtonText.text = $"Modify";
@@ -113,7 +114,7 @@ namespace Garage
                 _playerDataController.UpdateCash(_playerDataController.Cash - carCost);
                 _playerDataController.AddCar(carId);
                 CarSwitch(carId);
-                _messagesService.InitMessage(string.Empty, "U but a car");
+                _messagesService.InitMessage(string.Empty, "U buy a car");
                 CheckOnEmptyStyles();
             }
         }

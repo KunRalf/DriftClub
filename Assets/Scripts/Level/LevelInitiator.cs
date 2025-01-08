@@ -36,10 +36,17 @@ namespace Level
             var carData = _mainData.CarsDataList.GetCarById(curCatId.Value);
             var car = Instantiate(_mainData.CarsDataList.GetCarById(curCatId.Value).CarPrefab, _spawnPoint.position, _spawnPoint.rotation);
             car.Init(carData.CarStyle,carData.CarParams,car.Id);
+            car.OnUpdatePoints += ChangePlayerCash;
             car.SetCarStyleParams(_carSaveLoadController.PlayerCarsData.First(_=> _.CarId == carData.Id).Data);
             car.InitToGame();
             _camera.Follow = car.CameraFollowTransform;
             _camera.LookAt = car.CameraFollowTransform;
+        }
+
+        private void ChangePlayerCash(int cash)
+        {
+            var converted = cash / 10;
+            _playerDataController.UpdateCash(_playerDataController.Cash + converted);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Infrastructure.SaveLoad
         private PlayerData _playerData;
 
         public string Name => _playerData.PlayerName;
-        public float Cash => _playerData.PlayerCash;
+        public int Cash => _playerData.PlayerCash;
         public int? CurrentCar => _playerData.PlayerCurrentCarId;
         public List<int> OpenedCars => _playerData.OpenedCars.ToList();
         
@@ -47,7 +47,7 @@ namespace Infrastructure.SaveLoad
             Save();
         }
         
-        public void UpdateCash(float cash)
+        public void UpdateCash(int cash)
         {
             if (cash < 0)
                 cash = 0;
