@@ -93,7 +93,6 @@ namespace Car
             {
                 var mainModule = smoke.main;
                 mainModule.startColor = _carStyleSo.GetSmokeColor(colorId).Item2;
-
             }
         }
     }

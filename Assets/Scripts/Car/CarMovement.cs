@@ -29,11 +29,16 @@ namespace Car
         private float _minDriftAngle = 30f; 
         private float _maxDriftAngle = 90f; 
         private float _minSpeedForDrift = 5f;
+        private float _forwardWheelsBreakMultiplier = 0.7f;
+        private float _backWheelsBreakMultiplier = 0.3f;
+        private float _maxReturnSteeringAngle = 60f;
+        private float _maxSlipAngle = 120f;
         
         
         public void Init(CarParamsSO carParamsSo)
         {
             _carParamsSo = carParamsSo;
+            _rigidbody.centerOfMass = _centerOfMass.position;
         }
         
         private void Update()
@@ -77,12 +82,12 @@ namespace Car
         {
             foreach (var wheel in _forwardWheels)
             {
-                wheel.WheelCollider.brakeTorque = _brakeInput * _carParamsSo.BrakePower * 0.7f;
+                wheel.WheelCollider.brakeTorque = _brakeInput * _carParamsSo.BrakePower * _forwardWheelsBreakMultiplier;
             }
 
             foreach (var wheel in _backWheels)
             {
-                wheel.WheelCollider.brakeTorque = _brakeInput * _carParamsSo.BrakePower * 0.3f;
+                wheel.WheelCollider.brakeTorque = _brakeInput * _carParamsSo.BrakePower * _backWheelsBreakMultiplier;
             }
         }
 
@@ -105,11 +110,11 @@ namespace Car
         private void ApplySteering()
         {
             float steeringAngle = _horizontalInput * _carParamsSo.SteeringCurve.Evaluate(_speed);
-            if (_slipAngle < 120f)
+            if (_slipAngle < _maxSlipAngle)
             {
                 steeringAngle += Vector3.SignedAngle(transform.forward, _rigidbody.velocity + transform.forward, Vector3.up);
             }
-            steeringAngle = Mathf.Clamp(steeringAngle, -60, 60);
+            steeringAngle = Mathf.Clamp(steeringAngle, -_maxReturnSteeringAngle, _maxReturnSteeringAngle);
             foreach (var wheel in _forwardWheels)
             {
                 wheel.WheelCollider.steerAngle = steeringAngle;
