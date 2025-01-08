@@ -5,15 +5,6 @@ using UnityEngine;
 
     public class JsonManager : ISaveLoad
     {
-        // public void Save(string name, T obj)
-        // {
-        //      File.WriteAllText(Application.persistentDataPath + "/" + name + ".json", JsonConvert.SerializeObject(obj));
-        // }
-        //
-        // public T Load(string name) 
-        // {
-        //   
-        // }
         public T Load<T>(string name)
         {
             if(File.Exists(Application.persistentDataPath + "/" + name + ".json"))

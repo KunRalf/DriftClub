@@ -34,7 +34,6 @@ namespace Garage
             _spawnPoint = spawnPoint;
             _prevCar.AddListener(PrevCar);
             _nextCar.AddListener(NextCar);
-            // save data
             _carSaveLoadController = carSaveLoadController;
             _currentCarIndex = 0;
             ShowCar(_currentCarIndex);
@@ -79,7 +78,6 @@ namespace Garage
                 CurrentCarController.SetCarStyleParams(carData.Data);
             }
             CurrentCar = car;
-            // CheckOnEmptyStyles();
         }
 
         private void Default()

@@ -609,6 +609,11 @@ MonoBehaviour:
     <Place>k__BackingField: {fileID: 2931564508951380440}
   - <Type>k__BackingField: 2
     <Place>k__BackingField: {fileID: 6974624591711942245}
+  _smokeOfWheels:
+  - {fileID: 5870826073706162187}
+  - {fileID: 1221861994900567973}
+  - {fileID: 6697226069906392027}
+  - {fileID: 5118874354463745695}
 --- !u!114 &-6008358557988279344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1198,6 +1203,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: FRSmoke
       objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: ColorModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.7830189
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1292,6 +1317,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BRSmoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: ColorModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.7830189
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1388,6 +1433,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: FLSmoke
       objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: ColorModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.7830189
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1482,6 +1552,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BLSmoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: ColorModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.7830189
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

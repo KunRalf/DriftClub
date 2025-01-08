@@ -9,6 +9,7 @@ namespace Car
     {
         [SerializeField] private MeshRenderer _bodyCarMeshRenderer;
         [SerializeField] private List<CarDetailPlaces> _detailPlaces;
+        [SerializeField] private List<ParticleSystem> _smokeOfWheels;
         private Material _bodyCarMaterial;
         private CarStyleSO _carStyleSo;
 
@@ -28,45 +29,39 @@ namespace Car
         public void SetStyle(CarStyleData styleData)
         {
             SetColor(styleData.ColorId);
+            SetSmokeOfWheelsColor(styleData.SmokeOfWheelColoId);
             SetDetails(styleData.StyleObjects);
         }
 
         private void SetDetails(List<CarDetailsEnum> styleDataObj)
         {
             if (styleDataObj == null) return;
-
-            // Удаляем запчасти, которых нет в актуальном списке
+            
             foreach (var detailOnCar in
-                     _detailsOnCar.ToList()) // Используем ToList(), чтобы избежать ошибок при изменении коллекции
+                     _detailsOnCar.ToList())
             {
                 if (!styleDataObj.Contains(detailOnCar.Type))
                 {
-                    // Удаляем запчасть
                     Destroy(detailOnCar.gameObject);
-
-                    // Освобождаем место, если оно связано с этой запчастью
+                    
                     var place = _detailPlaces.FirstOrDefault(_ => _.Type == detailOnCar.Type);
                     if (place != default)
                     {
                         place.IsEmpty = true;
                     }
 
-                    // Удаляем запчасть из списка
                     _detailsOnCar.Remove(detailOnCar);
                 }
             }
-
-            // Добавляем или обновляем запчасти из актуального списка
+            
             List<CarStyleObjectPrefab> updatedParts = new List<CarStyleObjectPrefab>();
             foreach (var part in styleDataObj)
             {
                 var partDetail = part;
-
-                // Проверяем, есть ли такая запчасть на автомобиле
+                
                 var detailOnCar = _detailsOnCar.FirstOrDefault(_ => _.Type == partDetail);
                 if (detailOnCar == default)
                 {
-                    // Если запчасти нет, создаем её
                     var place = _detailPlaces.FirstOrDefault(_ => _.Type == part);
                     if (place == default) continue;
                     if (!place.IsEmpty) continue;
@@ -81,18 +76,25 @@ namespace Car
                 }
                 else
                 {
-                    // Если запчасть уже есть, просто добавляем её в обновленный список
                     updatedParts.Add(detailOnCar);
                 }
             }
-
-            // Обновляем список запчастей на автомобиле
+            
             _detailsOnCar = updatedParts;
         }
 
         private void SetColor(int colorId)
         {
             _bodyCarMaterial.color = _carStyleSo.GetCarColor(colorId).Item2;
+        } 
+        private void SetSmokeOfWheelsColor(int colorId)
+        {
+            foreach (var smoke in _smokeOfWheels)
+            {
+                var mainModule = smoke.main;
+                mainModule.startColor = _carStyleSo.GetSmokeColor(colorId).Item2;
+
+            }
         }
     }
 }

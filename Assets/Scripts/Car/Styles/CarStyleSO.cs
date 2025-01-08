@@ -10,6 +10,7 @@ namespace Car
     public class CarStyleSO : ScriptableObject
     {
         [field: SerializeField] public List<CarColor> Colors { get; private set; }
+        [field: SerializeField] public List<CarColor> SmokeColors { get; private set; }
         [field: SerializeField] public List<CarStyleObject> StyleObjects { get; private set; }
 
         public (CarDetailsEnum, CarStyleObjectPrefab) GetDetail(CarDetailsEnum carDetail)
@@ -30,6 +31,17 @@ namespace Car
             }
             var color = Colors.FirstOrDefault(_ => _.Id == id);
             if (color == default) return (0,Colors[0].Color);
+            return (color.Id,color.Color);
+        }   
+        
+        public (int, Color) GetSmokeColor(int id)
+        {
+            if (SmokeColors.Count == 0)
+            {
+                throw new ArgumentException("No Colors have been assigned.");
+            }
+            var color = SmokeColors.FirstOrDefault(_ => _.Id == id);
+            if (color == default) return (0,SmokeColors[0].Color);
             return (color.Id,color.Color);
         }
     }

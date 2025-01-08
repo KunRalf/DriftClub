@@ -516,6 +516,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bodyCarMeshRenderer: {fileID: 7553203231138319673}
   _detailPlaces: []
+  _smokeOfWheels:
+  - {fileID: 6596822985222545597}
+  - {fileID: 8797345253664597327}
+  - {fileID: 1840054457673450269}
+  - {fileID: 660861001899965181}
 --- !u!114 &6776878470337818100
 MonoBehaviour:
   m_ObjectHideFlags: 0
