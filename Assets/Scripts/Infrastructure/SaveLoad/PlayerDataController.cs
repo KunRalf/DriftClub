@@ -26,6 +26,7 @@ namespace Infrastructure.SaveLoad
         {
             _saveLoad = saveLoad;
             _playerData = saveLoad.Load<PlayerData>(SAVE_LOAD_PATH) ?? new PlayerData();
+            ClientProvider.PlayerDataController = this;
         }
 
         public void AddCar(int carId)
@@ -59,6 +60,7 @@ namespace Infrastructure.SaveLoad
         private void Save()
         {
             _saveLoad.Save(SAVE_LOAD_PATH, _playerData);
+            
         }
     }
 }

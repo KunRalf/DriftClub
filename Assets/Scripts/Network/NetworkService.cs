@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fusion;
 using Fusion.Sockets;
+using Level;
+using PlayerHub;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -10,15 +14,31 @@ namespace Network
 {
     public class NetworkService : MonoBehaviour, INetworkRunnerCallbacks
     {
-        private NetworkRunner _runner;
-        private List<SessionInfo> _availableRooms = new List<SessionInfo>();
+        public event Action<PlayerRef> PlayerJoined;
+        public event Action<PlayerRef> PlayerLeft; 
+     
+        [SerializeField] private PlayerInfo _playerInfo;
         
+        [SerializeField] private SceneReference _garageScene;
+        [SerializeField] private List<SceneReference> _levelScenes;
+        
+        public static List<PlayerInfo> Players = new List<PlayerInfo>();
+        
+        public NetworkRunner Runner { get; private set; }
+        private List<SessionInfo> _availableRooms = new List<SessionInfo>();
+
+        private void Start()
+        {
+            var config = NetworkProjectConfig.Global;
+            
+        }
+
         public async void CreateRoom()
         {
-            _runner = gameObject.AddComponent<NetworkRunner>();
-            _runner.ProvideInput = true;
+            Runner = gameObject.AddComponent<NetworkRunner>();
+            Runner.ProvideInput = true;
             
-            _runner.AddCallbacks(this);
+            Runner.AddCallbacks(this);
 
             var startGameArgs = new StartGameArgs()
             {
@@ -28,32 +48,29 @@ namespace Network
                 PlayerCount = 4
             };
 
-            var result = await _runner.StartGame(startGameArgs);
+            var res = await Runner.StartGame(startGameArgs);
+            if (res.Ok)
+            {
+              
+            }
+        }
 
-            if (result.Ok)
-            {
-      
-                Debug.Log("Room created successfully!");
-            }
-            else
-            {
-                Debug.LogError($"Failed to create room: {result.ErrorMessage}");
-            }
+        public void NextScene()
+        {
+            Runner.LoadScene(_levelScenes[0]);
         }
 
         public async void JoinRandomRoom()
         {
-            _runner = gameObject.AddComponent<NetworkRunner>();
-            _runner.ProvideInput = true;
+            Runner = gameObject.AddComponent<NetworkRunner>();
+            Runner.ProvideInput = true;
             
-            _runner.AddCallbacks(this);
+            Runner.AddCallbacks(this);
             
-            Debug.Log("Searching for available rooms...");
-            
-            await _runner.StartGame(new StartGameArgs()
+            var res = await Runner.StartGame(new StartGameArgs()
             {
                 GameMode = GameMode.Client,
-                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
             });
         }
         
@@ -64,39 +81,40 @@ namespace Network
             if (_availableRooms.Count > 0)
             {
                 var session = _availableRooms[0];
-                Debug.Log($"Joining room: {session.Name}");
-                runner.StartGame(new StartGameArgs()
+                var res = runner.StartGame(new StartGameArgs()
                 {
                     GameMode = GameMode.Client,
                     SessionName = session.Name,
                     SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>() 
                 });
             }
-            else
-            {
-                Debug.Log("No available rooms found!");
-            }
         }
         
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
-            if (player == runner.LocalPlayer)
+            if (runner.IsServer)
             {
-                Debug.Log("You joined the room!");
-            }
-            else
-            {
-                Debug.Log($"Player {player.PlayerId} joined the room!");
+                var roomPlayer = runner.Spawn(_playerInfo, Vector3.zero, Quaternion.identity, player);
             }
         }
         
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
-            Debug.Log($"Player {player.PlayerId} left the room.");
+            if (runner.IsServer)
+            {
+                PlayerLeft?.Invoke(player); 
+                var listPlayer = Players.FirstOrDefault(x => x.Object.InputAuthority == player);
+                if (listPlayer != null)
+                {
+                    if (listPlayer.CarController != null)
+                        runner.Despawn(listPlayer.CarController.Object);
+
+                    Players.Remove(listPlayer);
+                    runner.Despawn(listPlayer.Object);
+                }
+            }
         }
-
-
-
+        
         public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
         {
         }
@@ -146,6 +164,7 @@ namespace Network
 
         public void OnConnectedToServer(NetworkRunner runner)
         {
+          
         }
 
         public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)

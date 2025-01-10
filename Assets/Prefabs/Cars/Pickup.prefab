@@ -414,6 +414,7 @@ GameObject:
   - component: {fileID: 9068102865907791746}
   - component: {fileID: 7456676630427543791}
   - component: {fileID: 6776878470337818100}
+  - component: {fileID: -74313125618269119}
   m_Layer: 0
   m_Name: Pickup
   m_TagString: Untagged
@@ -482,7 +483,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 3649337096178544962}
-  _centerOfMass: {fileID: 2532783528102281719}
   _forwardWheels:
   - <WheelTransform>k__BackingField: {fileID: 726630450280352420}
     <WheelCollider>k__BackingField: {fileID: 1845641185334976342}
@@ -536,7 +536,27 @@ MonoBehaviour:
   _carMovement: {fileID: 9068102865907791746}
   _carStyle: {fileID: 7456676630427543791}
   _carHud: {fileID: 4059611078347630514, guid: 1f597c51304b1084bb9765bf4d868479, type: 3}
-  CameraFollowTransform: {fileID: 5576396788933122039}
+  _cameraFollowTransform: {fileID: 5576396788933122039}
+--- !u!114 &-74313125618269119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109457033346195208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3302674739
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 9068102865907791746}
+  - {fileID: 6776878470337818100}
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &2347060866040444330
 GameObject:
   m_ObjectHideFlags: 0

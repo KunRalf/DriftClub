@@ -70,9 +70,9 @@ namespace Garage
             var car = _cars[index];
             OnCarSwitch?.Invoke(car.Id);
             CurrentCarController = Instantiate(car.CarPrefab, _spawnPoint.position, _spawnPoint.rotation);
-            CurrentCarController.Init(car.CarStyle, car.CarParams, car.Id);
+            CurrentCarController.Init(car);
             CurrentCarController.InitToGarage();
-            var carData = _carSaveLoadController.PlayerCarsData.FirstOrDefault(_ => _.CarId == car.Id);
+            var carData = _carSaveLoadController.GetPlayerCarById(car.Id);
             if (carData != default)
             {
                 CurrentCarController.SetCarStyleParams(carData.Data);

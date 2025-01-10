@@ -229,7 +229,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 708965850}
-  _spawnPoint: {fileID: 711153805132137925}
+  _spawnPoints:
+  - {fileID: 711153805132137925}
+  - {fileID: 6524243898722120678}
+  - {fileID: 350379086677667663}
+  - {fileID: 2640569204504419426}
+  - {fileID: 5874388674063064547}
+  - {fileID: 5587441056958092163}
+  _playerInfoPrefab: {fileID: 5881011331500615374, guid: cc5c763a95075044bb88edca43fe135c,
+    type: 3}
 --- !u!4 &58911895 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8935095989379886729, guid: f5d3c5e0f5f32c141911c08deee9e94d,

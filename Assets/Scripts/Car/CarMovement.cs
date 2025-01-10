@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Car.CarComponents;
+using Fusion;
 using UnityEngine;
 
 namespace Car
 {
-    public class CarMovement : MonoBehaviour
+    public class CarMovement : NetworkBehaviour
     {
         public event Action OnDriftStarted;
         public event Action<float> OnDriftEnded;
@@ -32,27 +33,38 @@ namespace Car
         private float _backWheelsBreakMultiplier = 0.3f;
         private float _maxReturnSteeringAngle = 60f;
         private float _maxSlipAngle = 120f;
-        
+
+        private bool _isInited = false;
         
         public void Init(CarParamsSO carParamsSo)
         {
             _carParamsSo = carParamsSo;
+            _isInited = true;
         }
-        
-        private void Update()
+
+        public override void FixedUpdateNetwork()
         {
+            if(!_isInited)return;
             _speed = _rigidbody.velocity.magnitude;
             CheckInput();
             CheckDrift();
             CalculateSlipAngle();
-        }
-        
-        private void FixedUpdate()
-        {
             Motor();
             ApplySteering();
             Brake();
             LimitSpeed();
+            
+        }
+
+        private void Update()
+        {
+            if(!_isInited)return;
+           
+        }
+        
+        private void FixedUpdate()
+        {
+          
         }
 
         private void CheckInput()

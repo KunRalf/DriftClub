@@ -10,13 +10,14 @@ namespace Infrastructure.SaveLoad
         private readonly ISaveLoad _saveLoad;
         private const string SAVE_LOAD_PATH = "MyCarsData";
 
-        public List<PlayerCarData> PlayerCarsData {get; private set;}
+        private List<PlayerCarData> PlayerCarsData;
         
         [Inject]
         public CarSaveLoadController(ISaveLoad saveLoad)
         {
             _saveLoad = saveLoad;
             PlayerCarsData = saveLoad.Load<List<PlayerCarData>>(SAVE_LOAD_PATH) ?? new List<PlayerCarData>();
+            ClientProvider.CarSaveLoadController = this;
         }
 
         public void Save(PlayerCarData playerCarData)
@@ -31,6 +32,12 @@ namespace Infrastructure.SaveLoad
                 PlayerCarsData.Add(playerCarData);
             }
             _saveLoad.Save(SAVE_LOAD_PATH, PlayerCarsData);
+        }
+
+        public PlayerCarData GetPlayerCarById(int id)
+        {
+            var car = PlayerCarsData.FirstOrDefault(_ => _.CarId == id);
+            return car;
         }
 
         public void AddPurchasedDetails(int carId, CarDetailsEnum detail)

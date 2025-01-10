@@ -1,4 +1,5 @@
-﻿using Infrastructure.SaveLoad;
+﻿using Helpers.Injector;
+using Infrastructure.SaveLoad;
 
 namespace Zenject
 {
@@ -7,7 +8,8 @@ namespace Zenject
         public override void InstallBindings()
         {
             Container.Bind<ISaveLoad>().To<JsonManager>().AsSingle();
-
+            Container.Bind<IPrefabInjector>().To<PrefabInjector>().AsSingle();
+            
             Container.Bind<PlayerDataController>().AsSingle().NonLazy();
             Container.Bind<CarSaveLoadController>().AsSingle();
         }

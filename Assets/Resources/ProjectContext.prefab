@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea53d9a0d404846a004cc63cb57445b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainData: {fileID: 7381287265095258417}
+  _carsDataList: {fileID: 11400000, guid: c16c5930ffb8dd9428e9f1225d081a20, type: 2}
   _messagesService: {fileID: 3435922169458246367}
   _networkService: {fileID: 467678159414006199}
 --- !u!114 &8786443130894134332
@@ -138,6 +138,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614ce9ebf5264013b1bff9f06cc423c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInfo: {fileID: 5881011331500615374, guid: cc5c763a95075044bb88edca43fe135c,
+    type: 3}
+  _garageScene:
+    sceneAsset: {fileID: 102900000, guid: 47244abd54b6eb24385616a1a9200dbe, type: 3}
+    scenePath: Assets/Scenes/Garage.unity
+  _levelScenes:
+  - sceneAsset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+    scenePath: Assets/Scenes/GameScene.unity
 --- !u!1 &9082023314495584366
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +155,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7756490242360004990}
-  - component: {fileID: 7381287265095258417}
   - component: {fileID: 3435922169458246367}
   m_Layer: 0
   m_Name: Services
@@ -171,20 +178,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7521538551934739813}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7381287265095258417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9082023314495584366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 186adc8d000a4e61b7adc3308a925923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <CarsDataList>k__BackingField: {fileID: 11400000, guid: c16c5930ffb8dd9428e9f1225d081a20,
-    type: 2}
 --- !u!114 &3435922169458246367
 MonoBehaviour:
   m_ObjectHideFlags: 0

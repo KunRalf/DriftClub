@@ -1,34 +1,49 @@
 ﻿using System;
 using System.Linq;
 using Car.UI;
+using CarStore;
+using Fusion;
+using Infrastructure;
 using Infrastructure.SaveLoad;
+using Level;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
 
 namespace Car
 {
-    public class CarMainController : MonoBehaviour
+    public class CarMainController : NetworkBehaviour
     {
         public event Action<int> OnUpdatePoints; 
         
         [SerializeField] private CarMovement _carMovement;
         [SerializeField] private CarStyle _carStyle;
         [SerializeField] private CarHUD _carHud;
-        [field: SerializeField] public Transform CameraFollowTransform;
+        [SerializeField]private Transform _cameraFollowTransform;
         
         private CarHUD _curCarHud;
         
         public int Id { get; private set; }
-        
+
+        public override void Spawned()
+        {
+            if (Object.HasInputAuthority)
+            {
+                GameLevel.CurLevel?.SetPlayerCamera(_cameraFollowTransform);
+            }
+            
+            Init(ClientProvider.CarDataProvider.GetCarById(ClientProvider.PlayerDataController.CurrentCar.Value));
+            InitToGame();
+        }
+
         #region Initialization
         
 
-        public void Init(CarStyleSO carStyleSo, CarParamsSO carParamsSo, int id)
+        public void Init(CarData data)
         {
-            Id = id;
-            _carStyle.Init(carStyleSo);
-            _carMovement.Init(carParamsSo);
+            Id = data.Id;
+            _carStyle.Init(data.CarStyle);
+            _carMovement.Init(data.CarParams);
         }
         
         public void InitToGarage()
@@ -38,7 +53,10 @@ namespace Car
 
         public void InitToGame()
         {
-            InitHud();   
+            if (Object.HasInputAuthority)
+            {
+                InitHud();
+            }
         }
 
         private void InitHud()

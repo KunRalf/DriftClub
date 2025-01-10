@@ -20,7 +20,7 @@ namespace Garage
     {
         [Header("Settings")]
         [SerializeField] private Transform _carPoint;
-        private CarsDataListSO _carsDataListSO;
+        
        
         [Header("Controllers")]
         [SerializeField] private GarageCarSwitcher _garageCarSwitcher;
@@ -31,18 +31,20 @@ namespace Garage
         [SerializeField] private Button _goToGameButton;
         [SerializeField] private Button _joinButton;
         [SerializeField] private Button _modifyButton;
+        [SerializeField] private Button _nextSceneButton;
         [SerializeField] private TextMeshProUGUI _modifyButtonText;
 
         private CarSaveLoadController _carSaveLoadController;
         private PlayerDataController _playerDataController;
         private MessagesService _messagesService;
         private NetworkService _networkService;
+        private ICarDataProvider _carDataProvider;
 
         [Inject]
-        public void Construct(MainData mainData, CarSaveLoadController carSaveLoadController,
+        public void Construct(ICarDataProvider carDataProvider, CarSaveLoadController carSaveLoadController,
             PlayerDataController playerDataController, MessagesService messagesService, NetworkService networkService)
         {
-            _carsDataListSO = mainData.CarsDataList;
+            _carDataProvider = carDataProvider;
             _carSaveLoadController = carSaveLoadController;
             _playerDataController = playerDataController;
             _messagesService = messagesService;
@@ -50,13 +52,21 @@ namespace Garage
             _garageCarSwitcher.OnCarSwitch += CarSwitch;
             _cashUI.UpdateCash(_playerDataController.Cash);
             _playerDataController.OnCashChanged += _cashUI.UpdateCash;
-            _garageCarSwitcher.Init(_carsDataListSO.GetAllCars(),_carPoint, carSaveLoadController);
+            _garageCarSwitcher.Init(_carDataProvider.GetAllCars(),_carPoint, carSaveLoadController);
         }
         
         private void OpenModify()
         {
             _garageModify.Init(_garageCarSwitcher.CurrentCar.CarStyle, _garageCarSwitcher.CurrentCarController,_carSaveLoadController, _playerDataController, _messagesService);
             _garageCarSwitcher.Close();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                NextScene();
+            }
         }
 
         private void CarSwitch(int carId)
@@ -74,6 +84,7 @@ namespace Garage
             {
                 _goToGameButton.gameObject.SetActive(true);
                 _goToGameButton.AddListener(GoToGame); 
+              
                 
                 _joinButton.gameObject.SetActive(true);
                 _joinButton.AddListener(Join);
@@ -88,6 +99,12 @@ namespace Garage
             }
         }
 
+        private void NextScene()
+        {
+            Debug.Log("1111");
+            _networkService.NextScene();
+        }
+        
         private void CheckModify(bool isHas, int carId)
         {
             ResetModifyButton();
@@ -98,7 +115,7 @@ namespace Garage
             }
             else
             {
-                _modifyButtonText.text = $"Cost: {_carsDataListSO.GetCarById(carId).Cost}";
+                _modifyButtonText.text = $"Cost: {_carDataProvider.GetCarById(carId).Cost}";
                 _modifyButton.AddListener(() => OpenCarBuyWindow(carId));
             }
         }
@@ -117,12 +134,12 @@ namespace Garage
         
         private void OpenCarBuyWindow(int carId)
         {
-            _messagesService.InitMessage("Buy car", $"Cost: {_carsDataListSO.GetCarById(carId).Cost}",() => BuyCar(carId));
+            _messagesService.InitMessage("Buy car", $"Cost: {_carDataProvider.GetCarById(carId).Cost}",() => BuyCar(carId));
         }
 
         private void BuyCar(int carId)
         {
-            var carCost = _carsDataListSO.GetCarById(carId).Cost;
+            var carCost = _carDataProvider.GetCarById(carId).Cost;
             if (_playerDataController.Cash < carCost)
             {
                 _messagesService.InitMessage(string.Empty, "No money to buy");
@@ -140,7 +157,7 @@ namespace Garage
         private void CheckOnEmptyStyles()
         {
             PlayerCarData curData =
-                _carSaveLoadController.PlayerCarsData.FirstOrDefault(_ => _.CarId == _garageCarSwitcher.CurrentCar.Id);
+                _carSaveLoadController.GetPlayerCarById(_garageCarSwitcher.CurrentCar.Id);
             if (curData == default)
             {
                 curData = new PlayerCarData()

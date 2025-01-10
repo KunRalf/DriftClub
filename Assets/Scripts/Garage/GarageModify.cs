@@ -37,7 +37,7 @@ namespace Garage
             _carSaveLoadController = carStyleData;
             _messagesService = messagesService;
             _playerDataController = playerDataController;
-            _playerCarData = carStyleData.PlayerCarsData.First(_ => _.CarId == currentCarController.Id);
+            _playerCarData = carStyleData.GetPlayerCarById(currentCarController.Id);
             InitColors(carStyle.Colors);
             InitSmokeOfWheelColors(carStyle.SmokeColors);
             InitDetails(carStyle.StyleObjects);

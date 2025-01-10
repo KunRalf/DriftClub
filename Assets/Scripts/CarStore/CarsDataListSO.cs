@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CarStore
 {
     [CreateAssetMenu(fileName = "CarsList", menuName = "Data/CarsList", order = 0)]
-    public class CarsDataListSO : ScriptableObject
+    public class CarsDataListSO : ScriptableObject, ICarDataProvider
     {
         [SerializeField] private List<CarData> _cars;
 
@@ -17,12 +17,8 @@ namespace CarStore
                 throw new ArgumentException("Car not found");
             return car;
         }
+        
 
-        public List<int> GetAvailableIds()
-        {
-            return _cars.Select(_ => _.Id).ToList();
-        }
-
-        public List<CarData> GetAllCars() => _cars;
+        public List<CarData> GetAllCars() => _cars.ToList();
     }
 }
