@@ -3,6 +3,7 @@ using System.Linq;
 using Car.UI;
 using CarStore;
 using Fusion;
+using Helpers.Injector;
 using Infrastructure;
 using Infrastructure.SaveLoad;
 using Level;
@@ -22,9 +23,17 @@ namespace Car
         [SerializeField]private Transform _cameraFollowTransform;
         
         private CarHUD _curCarHud;
-        
+        private ICarDataProvider _carDataProvider;
+
+
         public int Id { get; private set; }
 
+        [Inject]
+        public void Construct(ICarDataProvider carDataProvider)
+        {
+            _carDataProvider = carDataProvider;
+        }
+        
         public override void Spawned()
         {
             if (Object.HasInputAuthority)
@@ -32,7 +41,7 @@ namespace Car
                 GameLevel.CurLevel?.SetPlayerCamera(_cameraFollowTransform);
             }
             
-            Init(ClientProvider.CarDataProvider.GetCarById(ClientProvider.PlayerDataController.CurrentCar.Value));
+            Init(_carDataProvider.GetCarById(Id));
             InitToGame();
         }
 
@@ -75,7 +84,11 @@ namespace Car
         public void SetCarStyleParams(CarStyleData data)
         {
             _carStyle.SetStyle(data);
-        }  
-        
+        }
+
+        public void SetCarId(int carId)
+        {
+            Id = carId;
+        }
     }
 }

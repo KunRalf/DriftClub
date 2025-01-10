@@ -115,7 +115,10 @@ namespace Level
 
         private void SetToPlayer(NetworkRunner runner, NetworkObject obj, PlayerInfo player)
         {
-            player.SetCarController(obj.GetComponent<CarMainController>());
+            _prefabInjector.Inject(obj.gameObject);
+            CarMainController car = obj.GetComponent<CarMainController>();
+            player.SetCarController(car);
+            car.SetCarId(player.CurCarId);
         }
 
         private void DespawnPlayer(PlayerRef player)

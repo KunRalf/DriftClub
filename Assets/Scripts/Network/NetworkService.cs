@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Fusion;
 using Fusion.Sockets;
+using Helpers.Injector;
 using Level;
 using PlayerHub;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Network
@@ -26,11 +28,12 @@ namespace Network
         
         public NetworkRunner Runner { get; private set; }
         private List<SessionInfo> _availableRooms = new List<SessionInfo>();
+        private IPrefabInjector _prefabInjector;
 
-        private void Start()
+        [Inject]
+        public void Construct(IPrefabInjector prefabInjector)
         {
-            var config = NetworkProjectConfig.Global;
-            
+            _prefabInjector = prefabInjector;
         }
 
         public async void CreateRoom()
@@ -95,6 +98,7 @@ namespace Network
             if (runner.IsServer)
             {
                 var roomPlayer = runner.Spawn(_playerInfo, Vector3.zero, Quaternion.identity, player);
+                _prefabInjector.Inject(roomPlayer.gameObject);
             }
         }
         

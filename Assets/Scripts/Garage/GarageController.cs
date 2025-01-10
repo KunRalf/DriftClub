@@ -53,6 +53,8 @@ namespace Garage
             _cashUI.UpdateCash(_playerDataController.Cash);
             _playerDataController.OnCashChanged += _cashUI.UpdateCash;
             _garageCarSwitcher.Init(_carDataProvider.GetAllCars(),_carPoint, carSaveLoadController);
+            _goToGameButton.AddListener(GoToGame); 
+            _joinButton.AddListener(Join);
         }
         
         private void OpenModify()
@@ -83,19 +85,14 @@ namespace Garage
             if (isHas)
             {
                 _goToGameButton.gameObject.SetActive(true);
-                _goToGameButton.AddListener(GoToGame); 
-              
-                
                 _joinButton.gameObject.SetActive(true);
-                _joinButton.AddListener(Join);
+      
             }
             else
             {
                 _goToGameButton.gameObject.SetActive(false);
-                _goToGameButton.RemoveAllListeners(); 
-                
                 _joinButton.gameObject.SetActive(false);
-                _joinButton.RemoveAllListeners();
+               
             }
         }
 

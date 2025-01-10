@@ -12,10 +12,17 @@ namespace PlayerHub
 {
     public class PlayerInfo : NetworkBehaviour
     {
+        private PlayerDataController _playerDataController;
         [Networked] public int CurCarId { get; set; } 
         [Networked] public string Name { get; set; } 
         [Networked] public CarMainController CarController { get; set; }
 
+
+        [Inject]
+        public void Construct(PlayerDataController playerDataController)
+        {
+            _playerDataController = playerDataController;
+        }
         
         public override void Spawned()
         {
@@ -23,7 +30,7 @@ namespace PlayerHub
 
             if (Object.HasInputAuthority)
             {
-                RPC_SetPlayerStats(ClientProvider.PlayerDataController.Name, ClientProvider.PlayerDataController.CurrentCar.Value);
+                RPC_SetPlayerStats(_playerDataController.Name, _playerDataController.CurrentCar.Value);
             }
             DontDestroyOnLoad(this);
         }

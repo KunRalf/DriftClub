@@ -586,11 +586,11 @@ MonoBehaviour:
   - <WheelTransform>k__BackingField: {fileID: 7432263064547444613}
     <WheelCollider>k__BackingField: {fileID: 6391499618894072129}
     <WheelSmoke>k__BackingField: {fileID: 6697226069906392027}
-    _slipAllowance: 0.35
+    _slipAllowance: 0.5
   - <WheelTransform>k__BackingField: {fileID: 2310621460439391794}
     <WheelCollider>k__BackingField: {fileID: 8771051599432813498}
     <WheelSmoke>k__BackingField: {fileID: 5118874354463745695}
-    _slipAllowance: 0.35
+    _slipAllowance: 0.5
   _carParamsSo: {fileID: 0}
 --- !u!114 &4524115838527088923
 MonoBehaviour:

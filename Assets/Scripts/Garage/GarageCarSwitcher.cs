@@ -4,10 +4,12 @@ using System.Linq;
 using Car;
 using CarStore;
 using Helpers;
+using Helpers.Injector;
 using Infrastructure.SaveLoad;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Garage
 {
@@ -23,9 +25,16 @@ namespace Garage
         private List<CarData> _cars = new List<CarData>();
         private int _currentCarIndex;
         private CarSaveLoadController _carSaveLoadController;
-        
+        private IPrefabInjector _prefabInjector;
+
         public CarData CurrentCar { get; private set; }
         public CarMainController CurrentCarController { get; private set; }
+
+        [Inject]
+        public void Construct(IPrefabInjector prefabInjector)
+        {
+            _prefabInjector = prefabInjector;
+        }
         
         public void Init(List<CarData> cars, Transform spawnPoint, CarSaveLoadController carSaveLoadController)
         {

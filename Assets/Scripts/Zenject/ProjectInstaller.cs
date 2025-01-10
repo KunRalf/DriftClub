@@ -17,7 +17,6 @@ namespace Zenject
             Container.Bind<ICarDataProvider>().FromInstance(_carsDataList).AsSingle().NonLazy();
             Container.Bind<MessagesService>().FromInstance(_messagesService).AsSingle().NonLazy();
             Container.Bind<NetworkService>().FromInstance(_networkService).AsSingle().NonLazy();
-            ClientProvider.CarDataProvider = _carsDataList;
         }
     }
 }

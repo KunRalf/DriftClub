@@ -17,7 +17,6 @@ namespace Infrastructure.SaveLoad
         {
             _saveLoad = saveLoad;
             PlayerCarsData = saveLoad.Load<List<PlayerCarData>>(SAVE_LOAD_PATH) ?? new List<PlayerCarData>();
-            ClientProvider.CarSaveLoadController = this;
         }
 
         public void Save(PlayerCarData playerCarData)
